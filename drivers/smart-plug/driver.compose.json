@@ -1,0 +1,28 @@
+{
+  "name": {
+    "en": "Smart plug"
+  },
+  "class": "socket",
+  "capabilities": [
+    "measure_current",
+    "measure_power",
+    "onoff",
+    "measure_voltage"
+  ],
+  "platforms": [
+    "local"
+  ],
+  "connectivity": [
+    "lan"
+  ],
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "pair": [
+    {
+      "id": "configure"
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ]
+}

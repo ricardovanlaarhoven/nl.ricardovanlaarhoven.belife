@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<h1 data-i18n="settings.title">
+  <!-- This will be filled with the translated string with key 'settings.title'. -->
+</h1>
+<p data-i18n="settings.subtitle">
+  <!-- This field will also be translated -->
+</p>
+<fieldset>
+  <legend>My Settings</legend>
+  <div class="field row">
+    <label for="name">Name</label>
+    <input id="name" type="text" value=""/>
+  </div>
+  <div class="field row">
+    <label for="id">ID</label>
+    <input id="id" type="text" value=""/>
+  </div>
+  <div class="field row">
+    <label for="key">KEY</label>
+    <input id="key" type="text" value=""/>
+  </div>
+</fieldset>
+<button id="save" class="right">Save changes</button>
+<script type="text/javascript">
+console.log('aaaaa');
+const idElement = document.getElementById('id');
+const keyElement = document.getElementById('key');
+const nameElement = document.getElementById('name');
+const saveElement = document.getElementById('save');
+
+saveElement.addEventListener('click', function(e) {
+  console.log('klik!');
+  Homey.createDevice({
+      name: nameElement.value,
+      data: {
+        id: idElement.value,
+      },
+      store: {
+        key: keyElement.value,
+        id: idElement.value,
+      },
+      settings: {
+        name: nameElement.value,
+      },
+    })
+    .then(function(result) {
+      console.log('done');
+      Homey.done();
+    })
+    .catch(function(error) {
+      Homey.alert(err);
+    });
+});
+</script>
+</body>
+</html>

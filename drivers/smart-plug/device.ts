@@ -34,6 +34,7 @@ class MyDevice extends Homey.Device {
    * onInit is called when the device is initialized.
    */
   async onInit() {
+    await this.setUnavailable();
     this.log('MyDevice has been initialized');
     const { id } = this.getData();
     const { key } = this.getStore();
@@ -54,8 +55,9 @@ class MyDevice extends Homey.Device {
     });
 
     // Add event listeners
-    device.on('connected', () => {
+    device.on('connected', async () => {
       console.log(`${this.getName()} - Connected to device!`);
+      await this.setAvailable();
       setTimeout(() => {
         device.refresh({ dps: 20 });
         device.refresh({ schema: true });
@@ -66,7 +68,10 @@ class MyDevice extends Homey.Device {
       });
     });
 
-    device.on('disconnected', () => {
+    device.on('disconnected', async () => {
+      await this.setUnavailable();
+      await this.setCapabilityValue('measure_current', 0);
+      await this.setCapabilityValue('measure_power', 0);
       console.log(`${this.getName()} - Disconnected from device.`);
       setTimeout(() => this.onInit(), 10 * 1000);
     });
